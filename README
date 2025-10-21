@@ -18,28 +18,28 @@ But the most important parameter to provide in the form is __VIEWSTATE which wor
 like short term memory for server that who we are and on which page we are.
 
 The Initial Search:
-So to achieve this in the spider we first sent GET request to this URL which
-is main page form url where we choose permit type, date range and submit for permit results:
+So to achieve this in the scrapy spider we first sent GET request to following URL which
+is main search page url where we choose permit type, date range and submit for permit results:
 
 https://aca-prod.accela.com/MISSOULA/Cap/CapHome.aspx?module=Building&TabName=Building&TabList=Home%7c0%7cBuilding%7c1%7cFire%7c2%7cEngineering%7c3%7cLicenses%7c4%7cPlanning%7c5%7cCurrentTabIndex%7c1
 
 
 Next we collected all important hidden form required fields for payload, _viewstate etc, then our target
-event is search button, so I include in our payload "__EVENTTARGET": "ctl00$PlaceHolderMain$btnNewSearch" it is the id of search button, and provided the parameters in form for example
-date range, permit types etc; here I have skipped mentioning specific permit type and scraping over all, we can do that too.
+event is search button, so I include in our payload "__EVENTTARGET": "ctl00$PlaceHolderMain$btnNewSearch" (it is the id of search button), and added additional parms in form payload for example
+date range, permit types etc; here I have skipped mentioning specific permit type and scraping over all, we can specify too.
 
 ##Parsing initial response and Pagination
-we get full results response, parse and repeat to collect form fields from current page, and target next page, so if there is next button we simply fetch the latest view state token and ,
+we get full results in response, parse and repeat to collect form fields from current page, and target next page, so if there is next button we simply fetch the latest view state token and ,
 and set __EventArgument to page$Next, we submit request.
 
-This all combination tell the server to target the next button on current result page and this process repeats until no next button is found. (we are getting correct results)
+This all combination tell the server to target the next results after current result page and this process repeats until no next button is found. (we are getting correct results)
 
 ##Scraping Detail Pages
 
 We send Get request to the detail URL of permit, where contractors data is available 
 along conditions tab and some other detail information is also available in single response, I fetch license professional information, work location and combine it to the intial data we scraped from results page.
 
-Those tabs which data is not available in this response, we can still intecept other API endpoints and send them request for further required tabs data following the current approach __Viewstae and other imp arguments in request payload.
+Those tabs which data is not available in this response, we can still intecept other API endpoints and send them request for further required tabs, following the current approach __Viewstae and other imp arguments in request payload.
 
 The approach is working without using headless browsers and the same approah can be used
 with other accela portals share same technical archeticture.
