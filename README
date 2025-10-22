@@ -2,7 +2,7 @@ This spider is for Accela MISSOULA portal, scrape permits detail data without us
 
 ## The Challenge:
 Accela postal is ASP.net website, so the challenging thing it was not refreshing
-the page and populating url, and not changing specific section of website on event. 
+the page and populating url, and was changing specific section of website on event. 
 So  when the browser send a request, the server sent some hidden instruction and javascript
 execute that and change the results part of website.
 
